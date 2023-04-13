@@ -3,51 +3,68 @@ import Banner from "./componentes/Banner/Banner";
 import Formulario from "./componentes/Formulario/Formulario";
 import Time from "./componentes/Time/Time";
 import Rodape from "./componentes/Rodape/Rodape";
+import { v4 as uuidv4 } from "uuid";
 
 function App() {
-  const times = [
+  const [times, setTimes] = useState([
     {
       nome: "Programação",
-      corPrimaria: "#57c278",
-      corSecundaria: "#d9f7e9",
+      cor: "#57c278",
+      id: uuidv4(),
     },
     {
       nome: "Front End",
-      corPrimaria: "#82cffa",
-      corSecundaria: "#e8f8ff",
+      cor: "#82cffa",
+      id: uuidv4(),
     },
     {
       nome: "Data Science",
-      corPrimaria: "#a6d157",
-      corSecundaria: "#f0f8e2",
+      cor: "#a6d157",
+      id: uuidv4(),
     },
     {
       nome: "Dev Ops",
-      corPrimaria: "#e06b69",
-      corSecundaria: "#fde7e8",
+      cor: "#e06b69",
+      id: uuidv4(),
     },
     {
       nome: "UX/Design",
-      corPrimaria: "#db6ebf",
-      corSecundaria: "#fae9f5",
+      cor: "#db6ebf",
+      id: uuidv4(),
     },
     {
       nome: "Mobile",
-      corPrimaria: "#ffba05",
-      corSecundaria: "#fff5d9",
+      cor: "#ffba05",
+      id: uuidv4(),
     },
     {
       nome: "Inovação e Gestão",
-      corPrimaria: "#ff8a29",
-      corSecundaria: "#ffeedf",
+      cor: "#ff8a29",
+      id: uuidv4(),
     },
-  ];
+  ]);
   const [colaboradores, setColaboradores] = useState([]);
 
   const aoNovoColaboradorAdicionado = (colaborador) => {
-    debugger;
     setColaboradores([...colaboradores, colaborador]);
   };
+
+  function deletarColaborador(id) {
+    setColaboradores(
+      colaboradores.filter((colaborador) => colaborador.id !== id)
+    );
+  }
+
+  function mudarCorTime(cor, id) {
+    setTimes(
+      times.map((time) => {
+        if (time.id === id) {
+          time.cor = cor;
+        }
+        return time;
+      })
+    );
+  }
 
   return (
     <div className="App">
@@ -61,12 +78,13 @@ function App() {
       {times.map((time) => (
         <Time
           nome={time.nome}
+          mudarCor={mudarCorTime}
           key={time.nome}
-          corPrimaria={time.corPrimaria}
-          corSecundaria={time.corSecundaria}
+          cor={time.cor}
           colaboradores={colaboradores.filter(
             (colaborador) => colaborador.time === time.nome
           )}
+          aoDeletar={deletarColaborador}
         />
       ))}
       <Rodape />
