@@ -85,6 +85,7 @@ function App() {
             (colaborador) => colaborador.time === time.nome
           )}
           aoDeletar={deletarColaborador}
+          
         />
       ))}
       <Rodape />
